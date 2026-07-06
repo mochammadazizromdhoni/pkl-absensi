@@ -30,11 +30,26 @@ public function store(LoginRequest $request): RedirectResponse
 
     $user = Auth::user();
 
-    if ($user->role == 'admin' || $user->role == 'super_admin') {
-        return redirect()->route('admin.dashboard');
-    }
+    switch ($user->role) {
+        case 'admin':
+        case 'super_admin':
+            return redirect()->route('admin.dashboard');
 
-    return redirect()->route('dashboard');
+        case 'pkl':
+            return redirect()->route('pkl.dashboard');
+
+        case 'sales':
+            return redirect()->route('sales.dashboard');
+
+        case 'teknisi':
+            return redirect()->route('teknisi.dashboard');
+
+        default:
+            Auth::logout();
+            return redirect('/login')->withErrors([
+                'email' => 'Role tidak dikenali.',
+            ]);
+    }
 }
 
     /**

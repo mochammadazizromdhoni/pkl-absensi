@@ -13,15 +13,23 @@ Route::middleware(['auth'])->group(function () {
 
         $user = auth()->user();
 
-        if ($user->role == 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
+        switch ($user->role) {
+            case 'admin':
+            case 'super_admin':
+                return redirect()->route('admin.dashboard');
 
-        if ($user->role == 'pkl') {
-            return redirect()->route('pkl.dashboard');
-        }
+            case 'pkl':
+                return redirect()->route('pkl.dashboard');
 
-        abort(403);
+            case 'sales':
+                return redirect()->route('sales.dashboard');
+
+            case 'teknisi':
+                return redirect()->route('teknisi.dashboard');
+
+            default:
+                abort(403);
+        }
 
     })->name('dashboard');
 
@@ -48,6 +56,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+});
+
+Route::middleware(['auth', 'sales'])->group(function () {
+
+    Route::get('/sales/dashboard', function () {
+        return view('sales.dashboard');
+    })->name('sales.dashboard');
+
+});
+
+Route::middleware(['auth', 'teknisi'])->group(function () {
+
+    Route::get('/teknisi/dashboard', function () {
+        return view('teknisi.dashboard');
+    })->name('teknisi.dashboard');
 
 });
 

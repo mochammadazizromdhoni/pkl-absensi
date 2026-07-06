@@ -27,5 +27,23 @@ class AdminSeeder extends Seeder
                 'role' => 'pkl',
             ]
         );
+
+        User::firstOrCreate(
+            ['email' => 'sales@gintara.com'],
+            [
+                'name' => 'Sales',
+                'password' => Hash::make('sales123'),
+                'role' => 'sales',
+            ]
+        );
+
+        User::firstOrCreate(
+            ['email' => 'teknisi@gintara.com'],
+            [
+                'name' => 'Teknisi',
+                'password' => Hash::make('teknisi123'),
+                'role' => 'teknisi',
+            ]
+        );
     }
 }
