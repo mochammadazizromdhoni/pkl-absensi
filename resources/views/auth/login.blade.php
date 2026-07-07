@@ -1,47 +1,159 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<x-auth-layout>
+    <main class="auth-shell auth-font relative min-h-screen w-full overflow-hidden lg:flex lg:items-stretch">
+        <div class="auth-blob auth-blob-a"></div>
+        <div class="auth-blob auth-blob-b"></div>
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        {{-- LEFT: brand, headline, signature grid, feature grid --}}
+        <aside class="relative z-10 px-6 pt-10 pb-6 lg:flex lg:w-1/2 lg:flex-col lg:justify-between lg:px-16 lg:py-14">
+            <div>
+                <div class="auth-logo-badge mb-7">
+                    <span class="auth-logo-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3v18l16-9L5 3z"/></svg>
+                    </span>
+                    <span class="leading-none">
+                        <span class="block text-[13px] font-extrabold tracking-tight text-slate-900">GINTARA.NET</span>
+                        <span class="block text-[9px] font-medium text-slate-500">Connect More, Empower All</span>
+                    </span>
+                </div>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+                <h1 class="max-w-md text-[26px] font-extrabold leading-tight text-white lg:text-[34px] lg:text-slate-900">
+                    Satu portal untuk mengelola
+                    <span class="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+                        operasional Gintara.Net
+                    </span>.
+                </h1>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+                <p class="mt-3 max-w-sm text-[13.5px] leading-relaxed text-slate-400 lg:text-slate-500">
+                    Akses dashboard management, absensi, PKL/Magang, sertifikat, inventori, dan
+                    laporan internal dalam satu sistem yang aman dan terintegrasi.
+                </p>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+                {{-- Signature: activity grid pulsing in sequence --}}
+                <div class="room-grid mt-7 max-w-xs" aria-hidden="true">
+                    @for ($i = 0; $i < 18; $i++)
+                        <div class="room-cell"></div>
+                    @endfor
+                </div>
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div class="mt-8 grid grid-cols-2 gap-3 lg:mt-10 lg:max-w-md">
+                <div class="auth-feature">
+                    <span class="auth-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </span>
+                    <div>
+                        <h3>Management System</h3>
+                        <p>Data operasional, karyawan, dashboard, dan laporan internal.</p>
+                    </div>
+                </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+                <div class="auth-feature">
+                    <span class="auth-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+                    </span>
+                    <div>
+                        <h3>Internship Portal</h3>
+                        <p>Pendaftaran, verifikasi, penempatan, dan sertifikat PKL/Magang.</p>
+                    </div>
+                </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+                <div class="auth-feature">
+                    <span class="auth-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </span>
+                    <div>
+                        <h3>Attendance</h3>
+                        <p>Rekap absensi GPS + selfie untuk karyawan dan peserta PKL.</p>
+                    </div>
+                </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+                <div class="auth-feature">
+                    <span class="auth-feature-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+                    </span>
+                    <div>
+                        <h3>Secure Access</h3>
+                        <p>Login berbasis role agar akses data tetap aman dan terkontrol.</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        {{-- RIGHT: login form --}}
+        <section class="relative z-10 flex items-center justify-center px-6 pb-12 lg:w-1/2 lg:bg-white lg:px-14 lg:py-14">
+            <div class="auth-card">
+                <span class="auth-eyebrow">
+                    <span class="auth-eyebrow-dot"></span>
+                    Gintara.Net Secure Portal
+                </span>
+
+                <h2 class="auth-title mt-4">Masuk ke akun Anda</h2>
+                <p class="auth-subtitle">
+                    Gunakan akun yang telah terdaftar untuk mengakses Portal Management atau
+                    Portal PKL/Magang Gintara.Net.
+                </p>
+
+                @if (session('status'))
+                    <div class="auth-status mt-5">{{ session('status') }}</div>
+                @endif
+
+                <form method="POST" action="{{ route('login') }}" id="loginForm" class="mt-6" novalidate>
+                    @csrf
+
+                    <div class="mb-4" data-field>
+                        <label class="auth-label" for="email">Username</label>
+                        <div class="auth-input-wrap">
+                            <span class="auth-input-icon">@</span>
+                            <input class="auth-input auth-input-has-icon" id="email" type="text" name="email"
+                                value="{{ old('email') }}" required autofocus autocomplete="username"
+                                placeholder="Masukkan username">
+                        </div>
+                        <p class="auth-error-text {{ $errors->has('email') ? '' : 'hidden' }}" data-error-for="email">
+                            {{ $errors->first('email') }}
+                        </p>
+                    </div>
+
+                    <div class="mb-3" data-field>
+                        <label class="auth-label" for="password">Password</label>
+                        <div class="auth-input-wrap">
+                            <input class="auth-input" id="password" type="password" name="password"
+                                required autocomplete="current-password" placeholder="Masukkan password">
+                            <button type="button" class="auth-toggle-password" data-toggle-password="password">Lihat</button>
+                        </div>
+                        <p class="auth-error-text {{ $errors->has('password') ? '' : 'hidden' }}" data-error-for="password">
+                            {{ $errors->first('password') }}
+                        </p>
+                    </div>
+
+                    <div class="auth-row mb-6 mt-1">
+                        <label class="auth-remember" for="remember">
+                            <input id="remember" type="checkbox" name="remember">
+                            Ingat saya
+                        </label>
+
+                        @if (Route::has('password.request'))
+                            <a class="auth-link" href="{{ route('password.request') }}">Lupa password? Hubungi Admin</a>
+                        @else
+                            <span class="auth-link cursor-default hover:no-underline">Lupa password? Hubungi Admin</span>
+                        @endif
+                    </div>
+
+                    <button class="auth-submit" type="submit" id="loginButton">
+                        <span>Masuk Sekarang</span>
+                    </button>
+                </form>
+
+                <div class="mt-7 flex items-center justify-between border-t border-white/10 pt-5 lg:border-slate-100">
+                    <p class="auth-footer-text leading-relaxed">
+                        © {{ date('Y') }} PT. DIGITAL NUSANTARA NETWORKS<br>
+                        Gintara.Net — Connect More, Empower All
+                    </p>
+                    <span class="auth-secure-badge shrink-0">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>
+                        Secure Login
+                    </span>
+                </div>
+            </div>
+        </section>
+    </main>
+</x-auth-layout>

@@ -1,0 +1,360 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  RuangKita — Auth Login
+  ------------------------------------------------------------------
+  Breakpoint logic:
+  - Base (phone) & md (tablet)  -> single column, dark navy-to-black theme
+  - lg (laptop/PC, >=1024px)    -> split screen, light theme (matches reference)
+*/
+
+:root {
+    --rk-navy-950: #060a14;
+    --rk-navy-900: #0a0f1e;
+    --rk-navy-800: #101a30;
+    --rk-navy-700: #16233f;
+    --rk-blue-600: #2563eb;
+    --rk-blue-500: #2f6fef;
+    --rk-sky-400: #38bdf8;
+    --rk-ring: rgba(56, 189, 248, 0.25);
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.auth-font {
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- Shell & background ---------- */
+
+.auth-shell {
+    position: relative;
+    background: radial-gradient(circle at 15% -10%, #14213f 0%, transparent 45%),
+        radial-gradient(circle at 100% 10%, #0d1b34 0%, transparent 40%),
+        linear-gradient(180deg, var(--rk-navy-900) 0%, var(--rk-navy-950) 55%, #000000 100%);
+}
+
+@media (min-width: 1024px) {
+    .auth-shell {
+        background: #ffffff;
+    }
+}
+
+.auth-blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(70px);
+    opacity: 0.55;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.auth-blob-a {
+    top: -120px;
+    right: -80px;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, var(--rk-blue-600), transparent 70%);
+}
+
+.auth-blob-b {
+    bottom: -140px;
+    left: -100px;
+    width: 340px;
+    height: 340px;
+    background: radial-gradient(circle, var(--rk-sky-400), transparent 70%);
+    opacity: 0.35;
+}
+
+@media (min-width: 1024px) {
+    .auth-blob {
+        opacity: 0.9;
+    }
+}
+
+/* ---------- Brand + headline ---------- */
+
+.auth-logo {
+    @apply grid h-11 w-11 place-items-center rounded-2xl text-lg font-extrabold text-white shadow-lg shadow-blue-900/30;
+    background: linear-gradient(135deg, var(--rk-blue-500), var(--rk-sky-400));
+}
+
+/* Logo lockup stays white regardless of theme, like a printed brand badge */
+.auth-logo-badge {
+    @apply inline-flex items-center gap-2.5 rounded-xl bg-white px-3.5 py-2.5 shadow-lg shadow-black/20;
+}
+
+.auth-logo-icon {
+    @apply grid h-8 w-8 flex-none place-items-center rounded-lg text-white;
+    background: linear-gradient(135deg, var(--rk-blue-500), var(--rk-sky-400));
+}
+
+.auth-eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold tracking-wide;
+    border-color: rgba(56, 189, 248, 0.25);
+    background: rgba(56, 189, 248, 0.08);
+    color: #7dd3fc;
+}
+
+@media (min-width: 1024px) {
+    .auth-eyebrow {
+        border-color: rgba(37, 99, 235, 0.2);
+        background: rgba(37, 99, 235, 0.08);
+        color: var(--rk-blue-600);
+    }
+}
+
+.auth-eyebrow-dot {
+    @apply h-1.5 w-1.5 rounded-full;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+/* ---------- Signature: the "room grid" ---------- */
+/* A quiet nod to what RuangKita actually does: rooms being booked in sequence. */
+
+.room-grid {
+    @apply grid grid-cols-6 gap-2;
+}
+
+.room-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    animation: room-pulse 5.5s ease-in-out infinite;
+}
+
+.room-cell:nth-child(3n + 1) { animation-delay: 0s; }
+.room-cell:nth-child(3n + 2) { animation-delay: 0.6s; }
+.room-cell:nth-child(3n + 3) { animation-delay: 1.2s; }
+.room-cell:nth-child(n + 7) { animation-delay: calc(1.8s + (var(--i, 0) * 0.15s)); }
+
+@keyframes room-pulse {
+    0%, 100% {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.08);
+    }
+    35% {
+        background: rgba(56, 189, 248, 0.35);
+        border-color: rgba(56, 189, 248, 0.6);
+        box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .room-cell {
+        animation: none;
+    }
+    .auth-blob {
+        display: none;
+    }
+}
+
+/* ---------- Feature cards ---------- */
+
+.auth-feature {
+    @apply flex items-start gap-3 rounded-2xl border p-3.5;
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+@media (min-width: 1024px) {
+    .auth-feature {
+        border-color: rgba(15, 23, 42, 0.06);
+        background: rgba(37, 99, 235, 0.04);
+    }
+}
+
+.auth-feature-icon {
+    @apply grid h-9 w-9 flex-none place-items-center rounded-xl text-white;
+    background: linear-gradient(135deg, var(--rk-blue-500), var(--rk-sky-400));
+}
+
+.auth-feature h3 {
+    @apply text-[13px] font-bold text-white;
+}
+
+.auth-feature p {
+    @apply mt-0.5 text-[11.5px] leading-snug text-slate-400;
+}
+
+@media (min-width: 1024px) {
+    .auth-feature h3 { color: #0f172a; }
+    .auth-feature p { color: #64748b; }
+}
+
+/* ---------- Form card ---------- */
+
+.auth-card {
+    @apply w-full max-w-[440px] rounded-3xl border p-7 shadow-2xl backdrop-blur-xl;
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+    animation: auth-card-in 0.5s ease-out;
+}
+
+@media (min-width: 1024px) {
+    .auth-card {
+        @apply rounded-2xl p-10;
+        border-color: #e5e7eb;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+        backdrop-filter: none;
+    }
+}
+
+@keyframes auth-card-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-title {
+    @apply text-2xl font-extrabold tracking-tight text-white lg:text-slate-900;
+}
+
+.auth-subtitle {
+    @apply mt-2 text-[13px] leading-relaxed text-slate-400 lg:text-slate-500;
+}
+
+.auth-label {
+    @apply mb-2 block text-[13px] font-semibold text-slate-300 lg:text-slate-700;
+}
+
+.auth-input-wrap {
+    @apply relative;
+}
+
+.auth-input {
+    @apply h-12 w-full rounded-xl border px-4 pr-12 text-sm outline-none transition;
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: #f8fafc;
+}
+
+.auth-input::placeholder {
+    color: #64748b;
+}
+
+.auth-input:focus {
+    border-color: var(--rk-sky-400);
+    box-shadow: 0 0 0 4px var(--rk-ring);
+}
+
+@media (min-width: 1024px) {
+    .auth-input {
+        border-color: #e5e7eb;
+        background: #ffffff;
+        color: #172033;
+    }
+    .auth-input::placeholder {
+        color: #9ca3af;
+    }
+    .auth-input:focus {
+        border-color: var(--rk-blue-600);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+}
+
+.auth-input-icon {
+    @apply pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-slate-500 lg:text-slate-400;
+}
+
+.auth-input-has-icon {
+    padding-left: 2.25rem;
+}
+
+.auth-input.is-invalid {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+}
+
+.auth-toggle-password {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 text-[12px] font-semibold text-slate-400 transition hover:text-white lg:text-slate-500 lg:hover:text-slate-700;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.auth-error-text {
+    @apply mt-1.5 text-[12px] font-medium text-red-400 lg:text-red-600;
+}
+
+.auth-row {
+    @apply flex items-center justify-between gap-3;
+}
+
+.auth-remember {
+    @apply flex cursor-pointer items-center gap-2 text-[13px] text-slate-400 lg:text-slate-500;
+}
+
+.auth-remember input {
+    accent-color: var(--rk-blue-500);
+}
+
+.auth-link {
+    @apply text-[13px] font-semibold text-sky-400 no-underline transition hover:underline lg:text-blue-600;
+}
+
+.auth-submit {
+    @apply relative flex h-[50px] w-full items-center justify-center overflow-hidden rounded-xl text-sm font-bold text-white transition;
+    background: linear-gradient(135deg, var(--rk-blue-500), var(--rk-sky-400));
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+}
+
+.auth-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 30px rgba(37, 99, 235, 0.42);
+}
+
+.auth-submit:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.auth-submit .ripple {
+    position: absolute;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.55);
+    transform: scale(0);
+    animation: auth-ripple 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes auth-ripple {
+    to {
+        transform: scale(3.2);
+        opacity: 0;
+    }
+}
+
+.auth-bottom-text {
+    @apply mt-6 text-center text-[13px] text-slate-400 lg:text-slate-500;
+}
+
+.auth-status {
+    @apply mb-5 rounded-xl px-3.5 py-2.5 text-[13px] font-medium;
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+}
+
+@media (min-width: 1024px) {
+    .auth-status {
+        background: #ecfdf5;
+        color: #047857;
+    }
+}
+
+.auth-footer-text {
+    @apply text-[11.5px] text-slate-500;
+}
+
+.auth-secure-badge {
+    @apply inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-emerald-400 lg:text-emerald-600;
+}
