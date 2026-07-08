@@ -186,10 +186,13 @@ body {
 /* ---------- Form card ---------- */
 
 .auth-card {
-    @apply w-full max-w-[440px] rounded-3xl border p-7 shadow-2xl;
-    border-color: #e5e7eb;
-    background: #ffffff;
-    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+    width: 100%;
+    max-width: 460px;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    box-shadow: 0 18px 45px rgba(15,23,42,.1);
 }
 
 @media (min-width: 1024px) {
@@ -360,4 +363,74 @@ body {
 
 .auth-secure-badge {
     @apply inline-flex items-center gap-1.5 text-[11.5px] font-semibold text-emerald-400 lg:text-emerald-600;
+}
+
+/* ===========================
+   RESPONSIVE MOBILE & TABLET
+=========================== */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width:1023px){
+
+    .room-grid{
+        display:none !important;
+    }
+
+    .auth-feature{
+        display:none !important;
+    }
+
+    .auth-card{
+        max-width:100%;
+        padding:24px;
+    }
+
+    .auth-title{
+        font-size:30px;
+    }
+}
+
+@media (max-width:768px){
+
+    .auth-card{
+        padding:22px;
+    }
+
+    .auth-title{
+        font-size:28px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    .auth-card{
+        padding:20px;
+    }
+
+    .auth-title{
+        font-size:24px;
+    }
+
+    .auth-input,
+    .auth-submit{
+        height:48px;
+    }
+
+}
+
+@media (max-width:390px){
+
+    .auth-card{
+        padding:18px;
+    }
+
+    .auth-title{
+        font-size:22px;
+    }
+
 }

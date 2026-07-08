@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
 
 // landing Page
@@ -47,15 +48,44 @@ Route::middleware('auth')->group(function () {
 });
 //dashboard Admin
 
-Route::middleware(['auth', 'admin'])->group(function () {
 
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function(){
+
+    Route::get('/dashboard',
+        [DashboardController::class,'index']
+    )->name('dashboard');
+
+
+    Route::get('/create',
+        [DashboardController::class,'create']
+    )->name('create');
+
+
+    Route::post('/store',
+        [DashboardController::class,'store']
+    )->name('store');
+
+
+    Route::get('/edit/{id}',
+        [DashboardController::class,'edit']
+    )->name('edit');
+
+
+    Route::put('/update/{id}',
+        [DashboardController::class,'update']
+    )->name('update');
+
+
+    Route::delete('/delete/{id}',
+        [DashboardController::class,'destroy']
+    )->name('delete');
 
 });
+<<<<<<< HEAD
 //dashboard PKL
 
+=======
+>>>>>>> 6da315c10a8be39cb7fdc69e331f4524ea2dc1a2
 Route::middleware(['auth', 'pkl'])->group(function () {
 
     Route::get('/absensi/pkl', function () {
