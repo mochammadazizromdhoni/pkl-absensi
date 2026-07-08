@@ -81,11 +81,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function(){
     )->name('delete');
 
 });
-<<<<<<< HEAD
-=======
 //dashboard PKL
 
->>>>>>> b7b8b38575fa47a7799fb92bce1e77d45c622de8
 Route::middleware(['auth', 'pkl'])->group(function () {
 
     Route::get('/absensi/pkl', function () {
