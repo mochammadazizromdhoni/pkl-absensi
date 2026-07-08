@@ -16,27 +16,26 @@
     </div>
 
 
-                <h1 class="max-w-md text-[26px] font-extrabold leading-tight text-white lg:text-[34px] lg:text-slate-900">
+                <h1 class="max-w-md text-[26px] font-extrabold leading-tight text-slate-900 lg:text-[34px]">
                     Satu portal untuk mengelola
                     <span class="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
                         operasional Gintara.Net
                     </span>.
                 </h1>
 
-                <p class="mt-3 max-w-sm text-[13.5px] leading-relaxed text-slate-400 lg:text-slate-500">
+                <p class="mt-3 max-w-sm text-[13.5px] leading-relaxed text-slate-500">
                     Akses dashboard management, absensi, PKL/Magang, sertifikat, inventori, dan
                     laporan internal dalam satu sistem yang aman dan terintegrasi.
                 </p>
 
                 {{-- Signature: activity grid pulsing in sequence --}}
-                <div class="room-grid mt-7 max-w-xs" aria-hidden="true">
+                <div class="hidden lg:grid room-grid mt-7 max-w-xs" aria-hidden="true">
                     @for ($i = 0; $i < 18; $i++)
                         <div class="room-cell"></div>
                     @endfor
                 </div>
-            </div>
 
-            <div class="mt-8 grid grid-cols-2 gap-3 lg:mt-10 lg:max-w-md">
+                <div class="hidden lg:grid mt-8 grid-cols-2 gap-3 lg:mt-10 lg:max-w-md">
                 <div class="auth-feature">
                     <span class="auth-feature-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>

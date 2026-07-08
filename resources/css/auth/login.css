@@ -34,15 +34,7 @@ body {
 
 .auth-shell {
     position: relative;
-    background: radial-gradient(circle at 15% -10%, #14213f 0%, transparent 45%),
-        radial-gradient(circle at 100% 10%, #0d1b34 0%, transparent 40%),
-        linear-gradient(180deg, var(--rk-navy-900) 0%, var(--rk-navy-950) 55%, #000000 100%);
-}
-
-@media (min-width: 1024px) {
-    .auth-shell {
-        background: #ffffff;
-    }
+    background: #ffffff;
 }
 
 .auth-blob {
@@ -118,8 +110,10 @@ body {
 /* ---------- Signature: the "room grid" ---------- */
 /* A quiet nod to what RuangKita actually does: rooms being booked in sequence. */
 
-.room-grid {
-    @apply grid grid-cols-6 gap-2;
+@media (min-width: 1024px) {
+    .room-grid {
+        @apply grid grid-cols-6 gap-2;
+    }
 }
 
 .room-cell {
@@ -160,8 +154,8 @@ body {
 
 .auth-feature {
     @apply flex items-start gap-3 rounded-2xl border p-3.5;
-    border-color: rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(15, 23, 42, 0.06);
+    background: rgba(37, 99, 235, 0.04);
 }
 
 @media (min-width: 1024px) {
@@ -177,7 +171,7 @@ body {
 }
 
 .auth-feature h3 {
-    @apply text-[13px] font-bold text-white;
+    @apply text-[13px] font-bold text-slate-900;
 }
 
 .auth-feature p {
@@ -192,11 +186,10 @@ body {
 /* ---------- Form card ---------- */
 
 .auth-card {
-    @apply w-full max-w-[440px] rounded-3xl border p-7 shadow-2xl backdrop-blur-xl;
-    border-color: rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-    animation: auth-card-in 0.5s ease-out;
+    @apply w-full max-w-[440px] rounded-3xl border p-7 shadow-2xl;
+    border-color: #e5e7eb;
+    background: #ffffff;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
 }
 
 @media (min-width: 1024px) {
@@ -215,7 +208,7 @@ body {
 }
 
 .auth-title {
-    @apply text-2xl font-extrabold tracking-tight text-white lg:text-slate-900;
+    @apply text-2xl font-extrabold tracking-tight text-slate-900;
 }
 
 .auth-subtitle {
@@ -223,7 +216,7 @@ body {
 }
 
 .auth-label {
-    @apply mb-2 block text-[13px] font-semibold text-slate-300 lg:text-slate-700;
+    @apply mb-2 block text-[13px] font-semibold text-slate-700;
 }
 
 .auth-input-wrap {
@@ -248,9 +241,10 @@ body {
 
 @media (min-width: 1024px) {
     .auth-input {
-        border-color: #e5e7eb;
-        background: #ffffff;
-        color: #172033;
+    @apply h-12 w-full rounded-xl border px-4 pr-12 text-sm outline-none transition;
+    border-color: #e5e7eb;
+    background: #ffffff;
+    color: #172033;
     }
     .auth-input::placeholder {
         color: #9ca3af;
@@ -344,10 +338,19 @@ body {
     color: #4ade80;
 }
 
+/* Sembunyikan room grid di HP */
+@media (max-width: 1023px) {
+    .room-grid {
+        display: none !important;
+    }
+}
+
+/* Tampilkan lagi di Laptop */
 @media (min-width: 1024px) {
-    .auth-status {
-        background: #ecfdf5;
-        color: #047857;
+    .room-grid {
+        display: grid !important;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: .5rem;
     }
 }
 
