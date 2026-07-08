@@ -25,7 +25,7 @@ class AuthenticatedSessionController extends Controller
     public function store(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'string'],
+            'username' => ['required', 'string'],
             'password' => ['required', 'string'],
             'device_fingerprint' => ['required', 'string', 'min:10'],
         ], [
@@ -34,24 +34,24 @@ class AuthenticatedSessionController extends Controller
         ]);
 
         // Throttle percobaan login per email + IP (standar Laravel).
-        $throttleKey = Str::lower($credentials['email']).'|'.$request->ip();
+        $throttleKey = Str::lower($credentials['username']).'|'.$request->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
 
             throw ValidationException::withMessages([
-                'email' => "Terlalu banyak percobaan login. Coba lagi dalam {$seconds} detik.",
+                'username' => "Terlalu banyak percobaan login. Coba lagi dalam {$seconds} detik.",
             ]);
         }
 
         if (! Auth::attempt(
-            ['email' => $credentials['email'], 'password' => $credentials['password']],
+            ['username' => $credentials['username'], 'password' => $credentials['password']],
             $request->boolean('remember')
         )) {
             RateLimiter::hit($throttleKey, 60);
 
             throw ValidationException::withMessages([
-                'email' => 'Username atau password salah.',
+                'username' => 'Username atau password salah.',
             ]);
         }
 
