@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard PKL</title>
 
     @vite(['resources/css/app.css','resources/js/app.js'])
@@ -20,6 +20,7 @@
         body {
             background: #F8FAFC;
             color: #1E293B;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .card-shadow {
@@ -35,42 +36,40 @@
             box-shadow: 0 12px 25px -5px rgba(37, 99, 235, 0.1), 0 8px 10px -6px rgba(37, 99, 235, 0.05);
         }
 
-        /* Hide scrollbar for Chrome, Safari and Opera */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
-        /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
         }
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased select-none">
 
 <div class="min-h-screen pb-32">
 
     <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-b-[40px] shadow-lg">
         <div class="max-w-7xl mx-auto px-6 py-10">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center gap-4">
                 
-                <div class="flex items-center gap-4">
+                <div class="flex items-center gap-4 min-w-0">
                     <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=ffffff&color=2563eb&bold=true"
                          alt="Avatar" 
-                         class="w-14 h-14 rounded-2xl border-2 border-white/50 shadow-md object-cover">
-                    <div>
+                         class="w-14 h-14 rounded-2xl border-2 border-white/50 shadow-md object-cover flex-shrink-0">
+                    <div class="min-w-0">
                         <p class="text-blue-100 text-sm font-medium tracking-wide">Selamat Datang 👋</p>
-                        <h1 class="text-2xl font-bold text-white leading-tight">{{ Auth::user()->name }}</h1>
-                        <p id="jam" class="text-blue-200/90 text-xs mt-1 font-mono bg-white/10 px-2.5 py-0.5 rounded-md inline-block"></p>
+                        <h1 class="text-2xl font-bold text-white leading-tight truncate">{{ Auth::user()->name }}</h1>
+                        <p id="jam" class="text-blue-200/90 text-xs mt-1 font-mono bg-white/10 px-2.5 py-0.5 rounded-md inline-block truncate max-w-full"></p>
                     </div>
                 </div>
 
-                <form action="{{ route('logout') }}" method="POST" class="inline-block">
+                <form action="{{ route('logout') }}" method="POST" class="flex-shrink-0">
                     @csrf
                     <button type="submit" 
                             class="flex items-center gap-2 bg-white/10 hover:bg-red-500/20 hover:text-red-300 text-white font-medium px-4 py-2.5 rounded-xl transition duration-300 border border-white/10 backdrop-blur-sm group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-200 group-hover:text-red-300 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/xl" class="w-5 h-5 text-blue-200 group-hover:text-red-300 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                         </svg>
                         <span class="text-sm hidden sm:inline">Keluar</span>
@@ -93,10 +92,12 @@
                     </div>
                 </div>
                 <button class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold px-8 py-3.5 rounded-2xl shadow-md shadow-blue-600/20 transition duration-150 flex items-center justify-center gap-2 w-full sm:w-auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                    </svg>
-                    Absen Sekarang
+                    <a href="{{ route('pkl.absensi') }}" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold px-8 py-3.5 rounded-2xl shadow-md shadow-blue-600/20 transition duration-150 flex items-center justify-center gap-2 w-full sm:w-auto text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                        Absen Sekarang
+                    </a>
                 </button>
             </div>
 
@@ -125,34 +126,34 @@
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="bg-white card-shadow rounded-2xl p-5 border border-slate-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xl">20</div>
-                <div>
-                    <p class="text-sm font-semibold text-slate-700">Hadir</p>
-                    <p class="text-xs text-slate-400">Hari Kerja</p>
+                <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xl flex-shrink-0">20</div>
+                <div class="min-w-0">
+                    <p class="text-sm font-semibold text-slate-700 truncate">Hadir</p>
+                    <p class="text-xs text-slate-400 truncate">Hari Kerja</p>
                 </div>
             </div>
 
             <div class="bg-white card-shadow rounded-2xl p-5 border border-slate-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xl">2</div>
-                <div>
-                    <p class="text-sm font-semibold text-slate-700">Izin</p>
-                    <p class="text-xs text-slate-400">Berkas/Sakit</p>
+                <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xl flex-shrink-0">2</div>
+                <div class="min-w-0">
+                    <p class="text-sm font-semibold text-slate-700 truncate">Izin</p>
+                    <p class="text-xs text-slate-400 truncate">Berkas/Sakit</p>
                 </div>
             </div>
 
             <div class="bg-white card-shadow rounded-2xl p-5 border border-slate-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xl">0</div>
-                <div>
-                    <p class="text-sm font-semibold text-slate-700">Alpha</p>
-                    <p class="text-xs text-slate-400">Tanpa Keterangan</p>
+                <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xl flex-shrink-0">0</div>
+                <div class="min-w-0">
+                    <p class="text-sm font-semibold text-slate-700 truncate">Alpha</p>
+                    <p class="text-xs text-slate-400 truncate">Sengaja</p>
                 </div>
             </div>
 
             <div class="bg-white card-shadow rounded-2xl p-5 border border-slate-100 flex items-center gap-4">
-                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl">18</div>
-                <div>
-                    <p class="text-sm font-semibold text-slate-700">Jurnal</p>
-                    <p class="text-xs text-slate-400">Telah Terisi</p>
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl flex-shrink-0">18</div>
+                <div class="min-w-0">
+                    <p class="text-sm font-semibold text-slate-700 truncate">Jurnal</p>
+                    <p class="text-xs text-slate-400 truncate">Telah Terisi</p>
                 </div>
             </div>
         </div>
@@ -276,43 +277,46 @@
     </div>
 </div>
 
-<nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-xl z-50">
-    <div class="max-w-lg mx-auto flex justify-around items-center h-22 px-2">
+<nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-slate-100 shadow-2xl z-50">
+    <div class="max-w-md mx-auto flex justify-between items-center h-16 px-4">
 
-        <a href="{{ route('pkl.dashboard') }}" class="flex flex-col items-center text-blue-600 flex-1 py-2">
+        <a href="{{ route('pkl.dashboard') }}" class="flex flex-col items-center justify-center text-blue-600 w-14 h-full active:scale-95 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
             </svg>
-            <span class="text-[10px] font-medium mt-1">Beranda</span>
+            <span class="text-[10px] font-medium mt-0.5">Beranda</span>
         </a>
 
-        <a href="#" class="flex flex-col items-center text-slate-400 hover:text-slate-600 flex-1 py-2">
+        <a href="#" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 w-14 h-full active:scale-95 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3M5 11h14M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/>
             </svg>
-            <span class="text-[10px] font-medium mt-1">Rekap</span>
+            <span class="text-[10px] font-medium mt-0.5">Rekap</span>
         </a>
 
-        <div class="flex-1 flex justify-center -mt-8 relative">
-            <a href="#" class="bg-gradient-to-tr from-blue-600 to-indigo-600 w-16 h-16 rounded-full flex items-center justify-center border-4 border-white shadow-lg shadow-blue-600/30 active:scale-95 transition duration-150">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M4 8h4m0 0h.01M4 16h4m0 0h.01M4 20h4m0 0h.01" />
+        <div class="relative w-16 h-full flex items-center justify-center">
+            <a href="{{ route('pkl.absensi') }}" class="absolute -top-5 bg-gradient-to-tr from-blue-600 to-indigo-600 w-14 h-14 rounded-full flex items-center justify-center border-4 border-white shadow-lg shadow-blue-600/30 active:scale-90 transition duration-150">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
             </a>
         </div>
 
-        <a href="#" class="flex flex-col items-center text-slate-400 hover:text-slate-600 flex-1 py-2">
+        <a href="#" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 w-14 h-full active:scale-95 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
-            <span class="text-[10px] font-medium mt-1">Jurnal</span>
+            <span class="text-[10px] font-medium mt-0.5">Jurnal</span>
         </a>
 
-        <a href="#" class="flex flex-col items-center text-slate-400 hover:text-slate-600 flex-1 py-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-            <span class="text-[10px] font-medium mt-1">Profil</span>
+        <a href="#" class="flex flex-col items-center justify-center w-14 h-full active:scale-95 transition group">
+            <div class="w-6 h-6 rounded-full overflow-hidden border border-slate-300 group-hover:border-blue-500 transition shadow-sm">
+                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=2563eb&color=ffffff&bold=true" 
+                     alt="Foto Profil" 
+                     class="w-full h-full object-cover">
+            </div>
+            <span class="text-[10px] font-medium text-slate-400 group-hover:text-slate-600 mt-0.5">Profil</span>
         </a>
 
     </div>
