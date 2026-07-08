@@ -3,66 +3,99 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Tampilkan halaman login.
      */
-    public function create(): View
+    public function create()
     {
         return view('auth.login');
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Proses login: verifikasi kredensial, lalu terapkan single-device lock.
      */
-public function store(LoginRequest $request): RedirectResponse
-{
-    $request->authenticate();
+    public function store(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'string'],
+            'password' => ['required', 'string'],
+            'device_fingerprint' => ['required', 'string', 'min:10'],
+        ], [
+            'device_fingerprint.required' => 'Perangkat tidak terverifikasi. Pastikan JavaScript aktif lalu muat ulang halaman.',
+            'device_fingerprint.min' => 'Perangkat tidak terverifikasi. Pastikan JavaScript aktif lalu muat ulang halaman.',
+        ]);
 
-    $request->session()->regenerate();
+        // Throttle percobaan login per email + IP (standar Laravel).
+        $throttleKey = Str::lower($credentials['email']).'|'.$request->ip();
 
-    $user = Auth::user();
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
 
-    switch ($user->role) {
-        case 'admin':
-        case 'super_admin':
-            return redirect()->route('admin.dashboard');
-
-        case 'pkl':
-            return redirect()->route('pkl.dashboard');
-
-        case 'sales':
-            return redirect()->route('sales.dashboard');
-
-        case 'teknisi':
-            return redirect()->route('teknisi.dashboard');
-
-        default:
-            Auth::logout();
-            return redirect('/login')->withErrors([
-                'email' => 'Role tidak dikenali.',
+            throw ValidationException::withMessages([
+                'email' => "Terlalu banyak percobaan login. Coba lagi dalam {$seconds} detik.",
             ]);
+        }
+
+        if (! Auth::attempt(
+            ['email' => $credentials['email'], 'password' => $credentials['password']],
+            $request->boolean('remember')
+        )) {
+            RateLimiter::hit($throttleKey, 60);
+
+            throw ValidationException::withMessages([
+                'email' => 'Username atau password salah.',
+            ]);
+        }
+
+        RateLimiter::clear($throttleKey);
+
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $incomingFingerprint = $credentials['device_fingerprint'];
+
+        if (is_null($user->device_id)) {
+            // Login pertama kalinya — kunci akun ini ke perangkat/browser sekarang.
+            $user->forceFill([
+                'device_id' => $incomingFingerprint,
+                'device_locked_at' => now(),
+            ])->save();
+        } elseif (! hash_equals($user->device_id, $incomingFingerprint)) {
+            // Fingerprint tidak cocok -> batalkan sesi, JANGAN biarkan login lanjut.
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            throw ValidationException::withMessages([
+                'device' => 'Maaf, perangkat Anda sudah terkunci. Silakan hubungi admin untuk mereset perangkat Anda.',
+            ]);
+        }
+
+        $request->session()->regenerate();
+
+        // TODO: sesuaikan redirect ini dengan route dashboard per-role kamu
+        // (mis. redirect ke route berbeda untuk admin/guru/siswa/staff jika perlu).
+        return redirect()->intended('/dashboard');
     }
-}
 
     /**
-     * Destroy an authenticated session.
+     * Logout. Tidak mereset device_id — device tetap terkunci ke akun ini
+     * sampai admin yang mereset lewat UserController::resetDevice().
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

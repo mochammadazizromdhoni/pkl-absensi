@@ -12,6 +12,9 @@ use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
+// NOTE: device_id / device_locked_at / device_reset_at sengaja TIDAK dimasukkan ke
+// Fillable — kolom ini hanya boleh diubah lewat AuthenticatedSessionController
+// (saat login) atau UserController::resetDevice() (oleh admin), bukan dari input user.
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -27,6 +30,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'device_locked_at' => 'datetime',
+            'device_reset_at' => 'datetime',
         ];
     }
 }

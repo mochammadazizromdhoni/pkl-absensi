@@ -96,8 +96,16 @@
                     <div class="auth-status mt-5">{{ session('status') }}</div>
                 @endif
 
+                @error('device')
+                    <div class="auth-status mt-5" style="background:#fee2e2;color:#dc2626;">
+                        {{ $message }}
+                    </div>
+                @enderror
+
                 <form method="POST" action="{{ route('login') }}" id="loginForm" class="mt-6" novalidate>
                     @csrf
+
+                    <input type="hidden" name="device_fingerprint" id="device_fingerprint" value="">
 
                     <div class="mb-4" data-field>
                         <label class="auth-label" for="email">Username</label>
