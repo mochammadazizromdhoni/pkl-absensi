@@ -5,23 +5,29 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 
+// landing Page
+
 Route::get('/', function () {
+
     if (auth()->check()) {
         return redirect()->route('dashboard');
     }
 
     return redirect()->route('login');
-});
 
-Route::middleware(['auth'])->group(function () {
+});
+//Dashboard Sesuai Role
+
+Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
 
         $user = auth()->user();
 
         switch ($user->role) {
-            case 'admin':
+
             case 'super_admin':
+            case 'admin':
                 return redirect()->route('admin.dashboard');
 
             case 'pkl':
@@ -35,11 +41,13 @@ Route::middleware(['auth'])->group(function () {
 
             default:
                 abort(403);
+
         }
 
     })->name('dashboard');
 
 });
+//dashboard Admin
 
 
 Route::middleware(['auth'])
@@ -72,36 +80,44 @@ Route::middleware(['auth'])
         Route::delete('/users/{user}', [UserController::class, 'destroy'])
             ->name('users.destroy');
 });
+//dashboard PKL
+
 Route::middleware(['auth', 'pkl'])->group(function () {
 
-    Route::get('/pkl/dashboard', function () {
-        return view('pkl.dashboard');
+    Route::get('/absensi/pkl', function () {
+        return view('absensi.pkl.dashboard');
     })->name('pkl.dashboard');
 
 });
+//dashboard Sales
+
+Route::middleware(['auth', 'sales'])->group(function () {
+
+    Route::get('/absensi/sales', function () {
+        return view('absensi.sales.dashboard');
+    })->name('sales.dashboard');
+
+});
+//dashboard Teknisi
+
+Route::middleware(['auth', 'teknisi'])->group(function () {
+
+    Route::get('/absensi/teknisi', function () {
+        return view('absensi.teknisi.dashboard');
+    })->name('teknisi.dashboard');
+
+});
+//Profile
 
 Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
 
-Route::middleware(['auth', 'sales'])->group(function () {
-
-    Route::get('/sales/dashboard', function () {
-        return view('sales.dashboard');
-    })->name('sales.dashboard');
-
-});
-
-Route::middleware(['auth', 'teknisi'])->group(function () {
-
-    Route::get('/teknisi/dashboard', function () {
-        return view('teknisi.dashboard');
-    })->name('teknisi.dashboard');
-
-});
 
 require __DIR__.'/auth.php';
