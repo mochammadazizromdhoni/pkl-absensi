@@ -5,16 +5,16 @@
 
         {{-- LEFT: brand, headline, signature grid, feature grid --}}
         <aside class="relative z-10 px-6 pt-10 pb-6 lg:flex lg:w-1/2 lg:flex-col lg:justify-between lg:px-16 lg:py-14">
-            <div>
-                <div class="auth-logo-badge mb-7">
-                    <span class="auth-logo-icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3v18l16-9L5 3z"/></svg>
-                    </span>
-                    <span class="leading-none">
-                        <span class="block text-[13px] font-extrabold tracking-tight text-slate-900">GINTARA.NET</span>
-                        <span class="block text-[9px] font-medium text-slate-500">Connect More, Empower All</span>
-                    </span>
-                </div>
+    <div>
+        <div class="mb-7">
+            <img
+                src="{{ asset('assets/logo/gintara.svg') }}"
+                alt="GINTARA.NET"
+                class="h-auto w-40 max-w-full object-contain sm:w-48 md:w-52"
+            >
+        </div>
+    </div>
+
 
                 <h1 class="max-w-md text-[26px] font-extrabold leading-tight text-white lg:text-[34px] lg:text-slate-900">
                     Satu portal untuk mengelola
@@ -146,7 +146,7 @@
                 <div class="mt-7 flex items-center justify-between border-t border-white/10 pt-5 lg:border-slate-100">
                     <p class="auth-footer-text leading-relaxed">
                         © {{ date('Y') }} PT. DIGITAL NUSANTARA NETWORKS<br>
-                        Gintara.Net — Connect More, Empower All
+                        Gintara.Net — Connect More, Empower All rights reserved.
                     </p>
                     <span class="auth-secure-badge shrink-0">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m20 6-11 11-5-5"/></svg>
