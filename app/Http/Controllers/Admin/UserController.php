@@ -4,46 +4,80 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Daftar semua user (Kelola Pengguna).
-     * TODO: sesuaikan dengan tampilan/kolom yang kamu mau, ini masih dasar.
-     */
     public function index()
     {
-        $users = User::orderBy('name')->paginate(15);
-
+        $users = User::latest()->get();
+    
         return view('admin.users.index', compact('users'));
     }
+    public function create()
+    {
+        return view('admin.users.create');
+    }
 
-    /**
-     * Detail satu user.
-     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+            'role' => 'required'
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
+        ]);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User berhasil ditambahkan.');
+    }
+
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'role' => 'required'
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User berhasil diupdate.');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User berhasil dihapus.');
+    }
     public function show(User $user)
     {
         return view('admin.users.show', compact('user'));
-    }
-
-    // TODO: tambahkan create(), store(), edit(), update(), destroy()
-    // sesuai kebutuhan Kelola Pengguna kamu (belum saya buatkan karena
-    // belum tahu field/role apa saja yang mau diatur di form-nya).
-
-    /**
-     * Reset device lock milik user tertentu. Khusus admin.
-     * Dipanggil dari tombol "Reset Perangkat" di halaman show/edit user.
-     */
-    public function resetDevice(User $user): RedirectResponse
-    {
-        $user->forceFill([
-            'device_id' => null,
-            'device_locked_at' => null,
-            'device_reset_at' => now(),
-        ])->save();
-
-        return back()->with('status', "Perangkat milik {$user->name} berhasil direset. Silakan minta user login ulang.");
     }
 }

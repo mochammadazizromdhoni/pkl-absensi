@@ -8,436 +8,431 @@
 
 <title>@yield('title','Admin Dashboard')</title>
 
-
 @vite(['resources/css/app.css','resources/js/app.js'])
 
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
-
-
 
 <style>
 
 *{
-    font-family:'Segoe UI',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter','Segoe UI',sans-serif;
 }
-
 
 body{
-
-    background:#f8fafc;
-    margin:0;
-
+    background:#eef3f9;
 }
 
-
-/* SIDEBAR */
+/* ======================
+        SIDEBAR
+====================== */
 
 .sidebar{
-
     position:fixed;
-    top:0;
     left:0;
+    top:0;
+    width:270px;
     height:100vh;
-    width:260px;
-
-    background:
-    linear-gradient(180deg,#2563eb,#1e40af);
-
-    padding:25px 18px;
-
-    color:white;
-
-    z-index:1000;
-
+    background:linear-gradient(
+        180deg,
+        #0b1f48 0%,
+        #1749a5 55%,
+        #2f7df6 100%
+    );
+    padding:24px 18px;
+    overflow-y:auto;
+    box-shadow:0 18px 45px rgba(0,0,0,.25);
 }
 
+/* LOGO */
+
+.logo-box{
+    background:#fff;
+    border-radius:22px;
+    padding:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+    margin-bottom:35px;
+}
 
 .logo{
-
-    height:55px;
-    width:auto;
-    margin-bottom:35px;
-
+    width:100%;
+    height:70px;
+    object-fit:contain;
+    display:block;
 }
 
+/* MENU */
 
-
-.sidebar .menu-title{
-
-    font-size:12px;
-    opacity:.7;
-    margin:20px 10px 10px;
-
+.menu-title{
+    color:#b8c7e6;
+    font-size:11px;
+    letter-spacing:2px;
+    margin:22px 12px 10px;
+    text-transform:uppercase;
 }
-
-
 
 .sidebar a{
-
     display:flex;
-
     align-items:center;
-
-    gap:14px;
-
-    color:white;
-
+    gap:15px;
+    color:#e7edf8;
     text-decoration:none;
-
-    padding:13px 15px;
-
-    border-radius:14px;
-
+    padding:14px 16px;
+    border-radius:15px;
     margin-bottom:8px;
-
-    font-weight:600;
-
     transition:.3s;
-
+    font-weight:600;
 }
 
+.sidebar a i{
+    font-size:21px;
+}
 
-
-.sidebar a:hover,
-.sidebar a.active{
-
+.sidebar a:hover{
     background:rgba(255,255,255,.18);
-
     transform:translateX(5px);
-
+    color:#fff;
 }
 
-
-
-.sidebar i{
-
-    font-size:20px;
-
+.sidebar a.active{
+    background:#fff;
+    color:#2563eb;
+    box-shadow:0 10px 20px rgba(0,0,0,.12);
 }
 
-
-
-
-
-/* CONTENT */
+/* ======================
+        MAIN
+====================== */
 
 .main{
-
-    margin-left:260px;
-
+    margin-left:270px;
     min-height:100vh;
-
 }
 
-
-
-/* NAVBAR */
-
+/* ======================
+        NAVBAR
+====================== */
 
 .navbar{
-
-    height:75px;
-
-    background:white!important;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.05);
-
-    padding:0 35px;
-
+    height:88px;
+    background:#fff!important;
+    padding:0 40px;
+    border-bottom:1px solid #edf2f7;
+    box-shadow:0 8px 25px rgba(15,23,42,.05);
 }
 
-
+.navbar h5{
+    font-size:24px;
+    font-weight:700;
+}
 
 .avatar{
-
-    width:42px;
-    height:42px;
-
+    width:48px;
+    height:48px;
     border-radius:50%;
-
-    background:#2563eb;
-
-    color:white;
-
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+    color:#fff;
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
-    font-weight:bold;
-
+    font-size:18px;
+    font-weight:700;
 }
 
-
-
-.dropdown-menu{
-
-    border:none;
-
-    border-radius:15px;
-
-    box-shadow:0 15px 30px rgba(0,0,0,.1);
-
-}
-
-
+/* ======================
+        CONTENT
+====================== */
 
 .content{
-
     padding:35px;
-
 }
 
-
-
-/* CARD */
-
+/* ======================
+        CARD
+====================== */
 
 .card{
-
     border:none;
-
-    border-radius:20px;
-
-    box-shadow:
-    0 15px 35px rgba(0,0,0,.06);
-
+    border-radius:22px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 10px 35px rgba(15,23,42,.08);
+    transition:.35s;
 }
 
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 18px 45px rgba(15,23,42,.12);
+}
 
+/* ======================
+        TABLE
+====================== */
 
+.table{
+    margin-bottom:0;
+}
 
+.table thead th{
+    background:#f8fafc;
+    color:#475569;
+    font-weight:700;
+    border:none;
+    padding:16px;
+}
+
+.table tbody td{
+    padding:18px;
+    vertical-align:middle;
+}
+
+.table tbody tr{
+    transition:.25s;
+}
+
+.table tbody tr:hover{
+    background:#f4f8ff;
+}
+
+/* ======================
+        BUTTON
+====================== */
 
 .btn{
-
     border-radius:12px;
-
-    padding:10px 18px;
-
     font-weight:600;
-
+    padding:10px 18px;
+    transition:.3s;
 }
 
-
-
-.form-control{
-
-    border-radius:14px;
-
-    padding:12px;
-
+.btn-sm{
+    padding:8px 12px;
 }
 
+.badge{
+    border-radius:30px;
+    padding:8px 14px;
+}
 
+/* ======================
+        DROPDOWN
+====================== */
 
+.dropdown-menu{
+    border:none;
+    border-radius:18px;
+    padding:10px;
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
+}
 
+.dropdown-item{
+    border-radius:10px;
+    padding:10px;
+}
+
+.dropdown-item:hover{
+    background:#eff6ff;
+}
+
+.action-group{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.action-btn{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:none;
+    border-radius:12px;
+    background:transparent;
+    text-decoration:none;
+    cursor:pointer;
+    transition:.25s ease;
+}
+
+.action-btn i{
+    font-size:18px;
+    transition:.25s;
+}
+
+.action-view{
+    color:#06b6d4;
+}
+
+.action-view:hover{
+    background:rgba(6,182,212,.10);
+    color:#0891b2;
+    transform:translateY(-2px);
+}
+
+.action-edit{
+    color:#f59e0b;
+}
+
+.action-edit:hover{
+    background:rgba(245,158,11,.10);
+    color:#d97706;
+    transform:translateY(-2px);
+}
+
+.action-delete{
+    color:#ef4444;
+}
+
+.action-delete:hover{
+    background:rgba(239,68,68,.10);
+    color:#dc2626;
+    transform:translateY(-2px);
+}
+
+.action-btn:hover i{
+    transform:scale(1.15);
+}
+
+.action-btn:active{
+    transform:scale(.95);
+}
+
+/* ======================
+      RESPONSIVE
+====================== */
 
 @media(max-width:991px){
 
-
 .sidebar{
-
-    left:-260px;
-
+    transform:translateX(-100%);
 }
-
 
 .main{
-
     margin-left:0;
-
 }
 
-
 }
-
-
 
 </style>
 
-
 @stack('css')
-
 
 </head>
 
-
-
 <body>
-
-
-
-<!-- SIDEBAR -->
 
 <div class="sidebar">
 
+<div class="logo-box">
 
-<img src="{{asset('assets/logo.jpeg')}}" class="logo">
-
-
-
-<div class="menu-title">
-
-MENU UTAMA
+<img src="{{ asset('assets/logo.jpeg') }}" class="logo">
 
 </div>
 
+<div class="menu-title">
+MENU UTAMA
+</div>
 
+<a href="{{ route('admin.dashboard') }}"
+class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
 
-<a href="{{route('admin.dashboard')}}" class="active">
-
-<i class="bi bi-grid"></i>
+<i class="bi bi-grid-fill"></i>
 
 Dashboard
 
 </a>
 
+<a href="{{ route('admin.users.index') }}"
+class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
 
-
-
-<a href="{{route('admin.dashboard')}}">
-
-<i class="bi bi-people"></i>
+<i class="bi bi-people-fill"></i>
 
 Users
 
 </a>
 
-
-
 <a href="#">
-
-<i class="bi bi-box-seam"></i>
-
+<i class="bi bi-box-seam-fill"></i>
 Data
-
 </a>
 
-
-
 <a href="#">
-
-<i class="bi bi-calendar-check"></i>
-
+<i class="bi bi-calendar-check-fill"></i>
 Absensi
-
 </a>
-
-
 
 <a href="#">
-
-<i class="bi bi-file-earmark-text"></i>
-
+<i class="bi bi-file-earmark-text-fill"></i>
 Laporan
-
 </a>
-
-
 
 <div class="menu-title">
-
 SETTING
-
 </div>
 
-
-
-<a href="{{route('profile.edit')}}">
-
-<i class="bi bi-person"></i>
-
+<a href="{{ route('profile.edit') }}">
+<i class="bi bi-person-circle"></i>
 Profile
-
 </a>
 
-
-
 </div>
-
-
-
-
-
-
-<!-- MAIN -->
-
 
 <div class="main">
 
-
-
-<nav class="navbar navbar-expand-lg">
-
+<nav class="navbar">
 
 <div class="container-fluid">
 
-
-
 <div>
 
-<h5 class="mb-0 fw-bold">
-
-Admin Panel
-
-</h5>
+<h5>Admin Panel</h5>
 
 <small class="text-muted">
-
 Dashboard Management
-
 </small>
 
 </div>
 
-
-
-
 <ul class="navbar-nav ms-auto">
 
-
-
 <li class="nav-item dropdown">
-
 
 <a class="nav-link dropdown-toggle d-flex align-items-center"
 href="#"
 data-bs-toggle="dropdown">
 
-
-
 <div class="avatar">
+{{ strtoupper(substr(auth()->user()->name,0,1)) }}
+</div>
 
-{{strtoupper(substr(auth()->user()->name,0,1))}}
+<div class="ms-3">
+
+<div class="fw-bold">
+
+{{ auth()->user()->name }}
 
 </div>
 
+<small class="text-muted">
 
+Administrator
 
-<span class="ms-2 fw-semibold">
+</small>
 
-{{auth()->user()->name}}
-
-</span>
-
+</div>
 
 </a>
 
-
-
-
 <ul class="dropdown-menu dropdown-menu-end">
-
-
 
 <li>
 
 <a class="dropdown-item"
-href="{{route('profile.edit')}}">
+href="{{ route('profile.edit') }}">
 
 <i class="bi bi-person me-2"></i>
 
@@ -447,21 +442,14 @@ Profile
 
 </li>
 
+<li><hr></li>
 
 <li>
-<hr>
-</li>
-
-
-
-<li>
-
 
 <form method="POST"
-action="{{route('logout')}}">
+action="{{ route('logout') }}">
 
 @csrf
-
 
 <button class="dropdown-item text-danger">
 
@@ -469,74 +457,42 @@ action="{{route('logout')}}">
 
 Logout
 
-
 </button>
-
 
 </form>
 
-
 </li>
-
-
 
 </ul>
 
-
 </li>
 
-
 </ul>
-
-
 
 </div>
-
-
 </nav>
-
-
-
-
-
 
 <div class="content">
 
+    @if(session('success'))
+        <div class="alert alert-success rounded-4">
+            {{ session('success') }}
+        </div>
+    @endif
 
-
-@if(session('success'))
-
-<div class="alert alert-success">
-
-{{session('success')}}
-
-</div>
-
-@endif
-
-
-
-
-@yield('content')
-
-
+    @yield('content')
 
 </div>
 
-
-
 </div>
-
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-
+<script>
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el=>{
+    new bootstrap.Tooltip(el);
+});
+</script>
 @stack('js')
 
-
 </body>
-
 </html>

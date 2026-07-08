@@ -40,7 +40,7 @@ class SiswaPklSeeder extends Seeder
             ],
         ];
 
-        foreach ($siswaPkl as $siswa) {
+        foreach ($siswaPkl as $siswa) { 
             User::firstOrCreate(
                 ['username' => $siswa['username']],
                 [
