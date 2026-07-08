@@ -437,7 +437,16 @@ href="{{ route('profile.edit') }}">
 <i class="bi bi-person me-2"></i>
 
 Profile
+<li>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
 
+        <button type="submit" class="dropdown-item text-danger">
+            <i class="bi bi-box-arrow-right me-2"></i>
+            Logout
+        </button>
+    </form>
+</li>
 </a>
 
 </li>
