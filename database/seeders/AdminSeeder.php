@@ -2,20 +2,24 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
+    /**
+     * Jalankan data akun admin.
+     */
     public function run(): void
     {
         User::firstOrCreate(
-            ['email' => 'admin@gintara.com'],
+            ['username' => 'admin'],
             [
-                'name' => 'Administrator',
+                'name'     => 'Administrator',
+                'email'    => 'admin@gintara.com',
                 'password' => Hash::make('admin123'),
-                'role' => 'admin',
+                'role'     => 'admin',
             ]
         );
     }

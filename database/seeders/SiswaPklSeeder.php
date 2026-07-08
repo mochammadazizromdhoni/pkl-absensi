@@ -2,37 +2,41 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class SiswaPklSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Jalankan data akun siswa PKL.
      */
     public function run(): void
     {
         $siswaPkl = [
             [
-                'name' => 'Bintang',
+                'name'     => 'Bintang',
                 'username' => 'bintang',
-                'role' => 'pkl',
+                'email'    => 'bintang@pkl.local',
+                'role'     => 'pkl',
             ],
             [
-                'name' => 'Aziz',
+                'name'     => 'Aziz',
                 'username' => 'aziz',
-                'role' => 'pkl',
+                'email'    => 'aziz@pkl.local',
+                'role'     => 'pkl',
             ],
             [
-                'name' => 'Devan',
+                'name'     => 'Devan',
                 'username' => 'devan',
-                'role' => 'pkl',
+                'email'    => 'devan@pkl.local',
+                'role'     => 'pkl',
             ],
             [
-                'name' => 'Prima',
+                'name'     => 'Prima',
                 'username' => 'prima',
-                'role' => 'pkl',
+                'email'    => 'prima@pkl.local',
+                'role'     => 'pkl',
             ],
         ];
 
@@ -40,9 +44,10 @@ class SiswaPklSeeder extends Seeder
             User::firstOrCreate(
                 ['username' => $siswa['username']],
                 [
-                    'name' => $siswa['name'],
+                    'name'     => $siswa['name'],
+                    'email'    => $siswa['email'],
                     'password' => Hash::make('pkl12345'),
-                    'role' => $siswa['role'],
+                    'role'     => $siswa['role'],
                 ]
             );
         }
