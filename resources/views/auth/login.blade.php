@@ -4,26 +4,26 @@
         <div class="auth-blob auth-blob-b"></div>
 
         {{-- LEFT: brand, headline, signature grid, feature grid --}}
-        <aside class="relative z-10 px-6 pt-10 pb-6 lg:flex lg:w-1/2 lg:flex-col lg:justify-between lg:px-16 lg:py-14">
+        <aside class="relative z-10 w-full px-5 pt-8 pb-6 sm:px-6 md:px-8 lg:flex lg:w-1/2 lg:flex-col lg:justify-between lg:px-16 lg:py-14">
     <div>
         <div class="mb-7">
             <img
                 src="{{ asset('assets/logo/gintara.svg') }}"
                 alt="GINTARA.NET"
-                class="h-auto w-40 max-w-full object-contain sm:w-48 md:w-52"
+                class="h-auto w-32 sm:w-40 md:w-44 lg:w-52 object-contain"
             >
         </div>
     </div>
 
 
-                <h1 class="max-w-md text-[26px] font-extrabold leading-tight text-slate-900 lg:text-[34px]">
+                <h1 class="max-w-full sm:max-w-md text-[22px] sm:text-[26px] lg:text-[34px] font-extrabold leading-tight text-slate-900">
                     Satu portal untuk mengelola
                     <span class="bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
                         operasional Gintara.Net
                     </span>.
                 </h1>
 
-                <p class="mt-3 max-w-sm text-[13.5px] leading-relaxed text-slate-500">
+                <p class="mt-3 max-w-full sm:max-w-sm text-[13px] sm:text-[14px] leading-relaxed text-slate-500">
                     Akses dashboard management, absensi, PKL/Magang, sertifikat, inventori, dan
                     laporan internal dalam satu sistem yang aman dan terintegrasi.
                 </p>
@@ -79,8 +79,8 @@
         </aside>
 
         {{-- RIGHT: login form --}}
-        <section class="relative z-10 flex items-center justify-center px-6 pb-12 lg:w-1/2 lg:bg-white lg:px-14 lg:py-14">
-            <div class="auth-card">
+        <section class="relative z-10 flex items-center justify-center w-full px-4 sm:px-6 md:px-8 pb-8 lg:w-1/2 lg:bg-white lg:px-14 lg:py-14">
+            <div class="auth-card w-full">
                 <span class="auth-eyebrow">
                     <span class="auth-eyebrow-dot"></span>
                     Gintara.Net Secure Portal
