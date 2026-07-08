@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\UserController;
 
 // landing Page
 
@@ -49,37 +50,35 @@ Route::middleware('auth')->group(function () {
 //dashboard Admin
 
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function(){
+Route::middleware(['auth'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-    Route::get('/dashboard',
-        [DashboardController::class,'index']
-    )->name('dashboard');
+        // Dashboard
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard');
 
-
-    Route::get('/create',
-        [DashboardController::class,'create']
-    )->name('create');
-
-
-    Route::post('/store',
-        [DashboardController::class,'store']
-    )->name('store');
-
-
-    Route::get('/edit/{id}',
-        [DashboardController::class,'edit']
-    )->name('edit');
-
-
-    Route::put('/update/{id}',
-        [DashboardController::class,'update']
-    )->name('update');
-
-
-    Route::delete('/delete/{id}',
-        [DashboardController::class,'destroy']
-    )->name('delete');
-
+            Route::get('/users', [UserController::class, 'index'])
+            ->name('users.index');
+        
+        Route::get('/users/create', [UserController::class, 'create'])
+            ->name('users.create');
+        
+        Route::post('/users', [UserController::class, 'store'])
+            ->name('users.store');
+        
+        Route::get('/users/{user}', [UserController::class, 'show'])
+            ->name('users.show');
+        
+        Route::get('/users/{user}/edit', [UserController::class, 'edit'])
+            ->name('users.edit');
+        
+        Route::put('/users/{user}', [UserController::class, 'update'])
+            ->name('users.update');
+        
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])
+            ->name('users.destroy');
 });
 //dashboard PKL
 

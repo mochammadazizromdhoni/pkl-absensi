@@ -108,24 +108,39 @@
                     <input type="hidden" name="device_fingerprint" id="device_fingerprint" value="">
 
                     <div class="mb-4" data-field>
-                        <label class="auth-label" for="email">Username</label>
+                        <label for="username">Username</label>
                         <div class="auth-input-wrap">
                             <span class="auth-input-icon">@</span>
-                            <input class="auth-input auth-input-has-icon" id="email" type="text" name="email"
-                                value="{{ old('email') }}" required autofocus autocomplete="username"
+                            <input
+                                id="username"
+                                type="text"
+                                name="username"
+                                value="{{ old('username') }}" required autofocus autocomplete="username"
                                 placeholder="Masukkan username">
                         </div>
-                        <p class="auth-error-text {{ $errors->has('email') ? '' : 'hidden' }}" data-error-for="email">
-                            {{ $errors->first('email') }}
+                        <p class="auth-error-text {{ $errors->has('username') ? '' : 'hidden' }}">
+                            {{ $errors->first('username') }}
                         </p>
                     </div>
 
                     <div class="mb-3" data-field>
                         <label class="auth-label" for="password">Password</label>
                         <div class="auth-input-wrap">
-                            <input class="auth-input" id="password" type="password" name="password"
-                                required autocomplete="current-password" placeholder="Masukkan password">
-                            <button type="button" class="auth-toggle-password" data-toggle-password="password">Lihat</button>
+                            <input
+                                class="auth-input"
+                                id="password"
+                                type="password"
+                                name="password"
+                                required
+                                autocomplete="current-password"
+                                placeholder="Masukkan password">
+
+                            <button
+                                type="button"
+                                class="auth-toggle-password"
+                                data-toggle-password="password">
+                                Lihat
+                            </button>
                         </div>
                         <p class="auth-error-text {{ $errors->has('password') ? '' : 'hidden' }}" data-error-for="password">
                             {{ $errors->first('password') }}
