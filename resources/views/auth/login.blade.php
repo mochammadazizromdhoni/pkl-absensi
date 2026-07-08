@@ -108,17 +108,18 @@
                     <input type="hidden" name="device_fingerprint" id="device_fingerprint" value="">
 
                     <div class="mb-4" data-field>
-                        <label for="username">Username</label>
+                        <label class="auth-label" for="username">Username</label>
                         <div class="auth-input-wrap">
                             <span class="auth-input-icon">@</span>
                             <input
+                                class="auth-input auth-input-has-icon"
                                 id="username"
                                 type="text"
                                 name="username"
                                 value="{{ old('username') }}" required autofocus autocomplete="username"
                                 placeholder="Masukkan username">
                         </div>
-                        <p class="auth-error-text {{ $errors->has('username') ? '' : 'hidden' }}">
+                        <p class="auth-error-text {{ $errors->has('username') ? '' : 'hidden' }}" data-error-for="username">
                             {{ $errors->first('username') }}
                         </p>
                     </div>

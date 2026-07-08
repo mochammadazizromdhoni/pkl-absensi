@@ -68,6 +68,9 @@ Route::middleware(['auth'])
         
         Route::delete('/users/{user}', [UserController::class, 'destroy'])
             ->name('users.destroy');
+            Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
 });
 
 // Dashboard PKL (Diperbarui)
